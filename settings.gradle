@@ -1,0 +1,3 @@
+include ':BaseInputAdapter'
+include ':app'
+rootProject.name = "InputAdapter"
