@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="30sp"
+    android:minHeight="45sp"
+    android:orientation="horizontal"
+    android:gravity="center"
+    android:background="@drawable/ripple_bg"
+    android:layout_gravity="center"
+    android:clickable="true"
+    android:id="@+id/list_item__root">
+    <TextView
+        android:id="@+id/list_item_text"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:text="测试"/>
+</LinearLayout>

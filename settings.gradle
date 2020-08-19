@@ -1,3 +1,4 @@
 include ':BaseInputAdapter'
 include ':app'
+include ':MultilevelTreeLibrary'
 rootProject.name = "InputAdapter"

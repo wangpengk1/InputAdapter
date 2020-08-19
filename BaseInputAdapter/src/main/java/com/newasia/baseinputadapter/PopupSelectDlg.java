@@ -1,39 +1,45 @@
 package com.newasia.baseinputadapter;
 
-import android.app.Activity;
-import android.app.Dialog;
 import android.content.Context;
-import android.os.Handler;
 import android.util.DisplayMetrics;
 import android.view.Gravity;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.Window;
 import android.view.WindowManager;
-import android.widget.BaseAdapter;
+
 import android.widget.FrameLayout;
-import android.widget.ListView;
-import android.widget.TextView;
-import android.widget.Toast;
+
 
 import androidx.appcompat.app.AlertDialog;
 
-import org.json.JSONException;
-import org.json.JSONObject;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
-import java.util.LinkedList;
-import java.util.List;
+import com.chad.library.adapter.base.BaseQuickAdapter;
+import com.chad.library.adapter.base.viewholder.BaseViewHolder;
 
-public class PopupSelectDlg
-{
-    public static void Popup(final Context contex, String strSql, OnSelectedRun runnable, String addition)
-    {
-        AlertDialog dialog = new AlertDialog.Builder(contex).create();
+import org.jetbrains.annotations.NotNull;
 
-        PopupSelectListAdapter adapter = new PopupSelectListAdapter(contex,dialog, strSql,runnable,addition);
-        final ListView listView = new ListView(contex);
-        listView.setLayoutParams(new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT , ViewGroup.LayoutParams.WRAP_CONTENT));
+import java.net.PasswordAuthentication;
+import java.util.Map;
+
+public class PopupSelectDlg {
+
+    public static void Popup(final Context contex, String strSql, OnItemSelected listener, String addition) {
+        final AlertDialog dialog = new AlertDialog.Builder(contex).create();
+
+        ListAdapter adapter = new ListAdapter(contex, strSql, addition);
+        final RecyclerView listView = new RecyclerView(contex);
+        listView.setLayoutManager(new LinearLayoutManager(contex, RecyclerView.VERTICAL, false));
+        listView.setLayoutParams(new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT));
         listView.setAdapter(adapter);
+
+        adapter.setOnItemClickListener((adapter2,view,position)->{
+            ListItem item = adapter.getItem(position);
+            listener.itemSelected(item.name,item.id);
+            dialog.cancel();
+        });
 
 
         listView.addOnLayoutChangeListener(new View.OnLayoutChangeListener() {
@@ -46,19 +52,21 @@ public class PopupSelectDlg
                 WindowManager wm = (WindowManager) contex.getSystemService(Context.WINDOW_SERVICE);
                 DisplayMetrics dm = new DisplayMetrics();
                 wm.getDefaultDisplay().getMetrics(dm);
-                int needHeight = dm.heightPixels/2;
+                int needHeight = dm.heightPixels / 2;
 
                 if (contentHeight > needHeight) {
                     //注意：这里的 LayoutParams 必须是 FrameLayout的！！
-                    listView.setLayoutParams(new FrameLayout.LayoutParams(FrameLayout.LayoutParams.MATCH_PARENT,
-                            needHeight));
+//                    listView.setLayoutParams(new FrameLayout.LayoutParams(FrameLayout.LayoutParams.MATCH_PARENT,
+//                            needHeight));
+                    WindowManager.LayoutParams params = dialog.getWindow().getAttributes();
+                    params.width = WindowManager.LayoutParams.WRAP_CONTENT;
+                    params.height = needHeight;
+                    dialog.getWindow().setAttributes(params);
                 }
             }
         });//设置弹出对话框只有窗口高度的一半，以防列表长度太大遮盖住了整个窗口
 
         dialog.setView(listView);
-
-
 
 
         Window window = dialog.getWindow();
@@ -75,171 +83,77 @@ public class PopupSelectDlg
         //设置窗口高度为包裹内容
         params.height = WindowManager.LayoutParams.WRAP_CONTENT;
         params.softInputMode = WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_HIDDEN;//显示dialog的时候,就显示软键盘
-        params.flags = WindowManager.LayoutParams.FLAG_DIM_BEHIND;//就是这个属性导致window后所有的东西都成暗淡
-        params.dimAmount = 0.5f;//设置对话框的透明程度背景(非布局的透明度)
+        //params.flags = params.flags | WindowManager.LayoutParams.FLAG_DIM_BEHIND;//就是这个属性导致window后所有的东西都成暗淡
+        //params.dimAmount = 0.5f;//设置对话框的透明程度背景(非布局的透明度)
         //将设置好的属性set回去
         window.setAttributes(params);
         window.setBackgroundDrawableResource(android.R.color.white);
     }
 
 
-    public static abstract class OnSelectedRun implements Runnable
-    {
-        private String strText;
-        private Dialog dlg;
-        private String id = "-1";
-        public String getStrText() {
-            return strText;
-        }
 
-        public void setStrText(String strText) {
-            this.strText = strText;
-        }
 
-        public Dialog getDlg() {
-            return dlg;
-        }
-
-        public void setDlg(Dialog dlg) {
-            this.dlg = dlg;
-        }
-
-        public String getId() {
-            return id;
-        }
-
-        public void setId(String id) {
-            this.id = id;
-        }
+    public static interface OnItemSelected {
+        void itemSelected(String name, String id);
     }
-}
+
+    private static class ListItem {
+        public String name = "";
+        public String id = "";
+    }
+
+    public static interface OnLoadListFromServer {
+        void onEnumList(String sql, OnEnumListResult listener);
+    }
+
+    public static interface OnEnumListResult {
+        void onResult(Map<String, String> resultList);
+    }
 
 
-class PopupSelectListAdapter extends BaseAdapter
-{
-    private Context mContex;
-    private String strSql;
-    private List<String> datas = new LinkedList<>();
-    private List<String> datas2 = new LinkedList<>();
-    private PopupSelectDlg.OnSelectedRun mRun;
-    private AlertDialog mDlg;
-    private float downX,downY;
-    private String mAddition;
+    private static OnLoadListFromServer OnLoadListener;
 
-
-    PopupSelectListAdapter(Context context, AlertDialog dlg, String sql, PopupSelectDlg.OnSelectedRun run, String add)
+    public static void  setOnLoadDataListener(OnLoadListFromServer listener)
     {
-        mDlg = dlg;
-        mRun = run;
-        strSql = sql;
-        mContex = context;
+        OnLoadListener = listener;
+    }
 
-        if (add!=null && !add.isEmpty())
-        {
-            datas.add(add);
-            datas2.add("-1");
-            mAddition =add;
-        }
+    private static class ListAdapter extends BaseQuickAdapter<ListItem, BaseViewHolder> {
+        private String mSql = "";
+        private String mAddition = "";
+        private Context mContext;
 
-        final JSONObject object = new JSONObject();
-        try
-        {
-            object.put("statement", sql);
-        }catch (JSONException e){}
-
-        //根据传入的数据库查询语句，获取到相应的待选内容，填充对话框的ListView
-        ClientNetty client = new ClientNetty(object, Common.Role.DrivingRecord.ordinal(), new Handler(), new ClientNetty.ResultRunnable()
-        {
-            @Override
-            public void run()
-            {
-                try
-                {
-                    if (isOk)
+        public ListAdapter(Context context, String sql, String addition) {
+            super(R.layout.list_item, null);
+            mContext = context;
+            mSql = sql;
+            mAddition = addition;
+            if (OnLoadListener != null) {
+                OnLoadListener.onEnumList(sql, resultList -> {
+                    if(addition!=null && !addition.isEmpty())
                     {
-                        if (obj.getBoolean("result"))
-                        {
-
-                            for (int i=0;i<obj.length()-2;++i)
-                            {
-                                JSONObject tmpObj = obj.getJSONObject("row"+i);
-                                datas.add(tmpObj.getString("0"));
-                                if (tmpObj.length()>1)//如果有查询字段的数目为两个，就准备两个TextView的数据
-                                {
-                                    datas2.add(tmpObj.getString("1"));
-                                }
-
-                            }
-
-                            notifyDataSetChanged();
-                        }
-                        else
-                        {
-                            Toast.makeText(mContex, obj.getString("error"), Toast.LENGTH_LONG);
-                        }
+                        ListItem item = new ListItem();
+                        item.id = "-1";
+                        item.name = addition;
+                        addData(item);
                     }
-                    else
-                    {
-                        Toast.makeText(mContex, strError, Toast.LENGTH_LONG);
+                    for (String key : resultList.keySet()) {
+                        ListItem item = new ListItem();
+                        item.id = key;
+                        item.name = resultList.get(key);
+                        addData(item);
                     }
-
-                }catch (JSONException e){e.printStackTrace();}
+                    notifyDataSetChanged();
+                });
             }
-        });
-
-
-        new Thread(client).start();
-    }
-    @Override
-    public int getCount() {
-        return datas.size();
-    }
-
-    @Override
-    public Object getItem(int position) {
-        return datas.get(position);
-    }
-
-    @Override
-    public long getItemId(int position) {
-        return position;
-    }
-
-    @Override
-    public View getView(int position, View convertView, ViewGroup parent)
-    {
-        View view;
-        if (convertView != null)
-        {
-            view = convertView;
-        }
-        else
-        {
-            view = ((Activity)mContex).getLayoutInflater().inflate(R.layout.list_item, null);
         }
 
-        updateView(position, view);
-        return  view;
+        @Override
+        protected void convert(@NotNull BaseViewHolder holder, ListItem item) {
+            holder.setText(R.id.list_item_text, item.name);
+        }
+
+
     }
 
-
-    void updateView(final int pos, View view)
-    {
-        ((TextView)view.findViewById(R.id.list_item_text)).setText(datas.get(pos));
-        view.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v)
-            {
-                mRun.setStrText(datas.get(pos));
-                if (datas2.size() == datas.size())
-                {
-                    mRun.setId(datas2.get(pos));
-                }
-
-                mRun.setDlg(mDlg);
-                new Handler().postDelayed(mRun, 500);
-            }
-        });
-
-    }
 }
