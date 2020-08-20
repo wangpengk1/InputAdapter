@@ -48,7 +48,9 @@ public class SimpleTreeRecyclerAdapter extends TreeRecyclerAdapter {
                 setChecked(node,viewHolder.cb.isChecked());
                 if(mSelectedListener!=null && viewHolder.cb.isChecked())
                 {
-                    mSelectedListener.onSelected(node);
+                    holder.itemView.postDelayed(()->{
+                        mSelectedListener.onSelected(node);
+                    },1000);
                 }
             }
         });
