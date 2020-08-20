@@ -49,7 +49,7 @@ public class CommonMultiTypeAdapter extends BaseMultiItemQuickAdapter<MultiTypeI
         mAutoCompleteEnumListener = method;
     }
 
-    CommonMultiTypeAdapter(Activity context)
+    public CommonMultiTypeAdapter(Activity context)
     {
         super(null);
         mImageHelper = new GetImageHelper(true,context);
@@ -68,6 +68,8 @@ public class CommonMultiTypeAdapter extends BaseMultiItemQuickAdapter<MultiTypeI
         addItemType(MultiTypeItem.AUTOCOMPLETE, R.layout.multi_type_item_auto_complete);
 
         addItemType(MultiTypeItem.TWOBUTTON, R.layout.multi_type_item_two_button);
+
+        addItemType(MultiTypeItem.TREE_SELECT,R.layout.multi_type_item_select);
 
     }
 
@@ -291,6 +293,31 @@ public class CommonMultiTypeAdapter extends BaseMultiItemQuickAdapter<MultiTypeI
                 });
             }
                 break;
+            case MultiTypeItem.TREE_SELECT:
+            {
+                helper.setVisible(R.id.list_item_select_mark, item.mIsNecessary);
+                helper.setText(R.id.list_item_select_label, item.mLabel);
+                helper.setText(R.id.list_item_select_content, item.mContent.toString());
+                item.mContenView = helper.getView(R.id.list_item_select_content);
+                RelativeLayout layout = helper.getView(R.id.list_item_select_root);
+                layout.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v)
+                    {
+                        PopupTreeSelectDlg.Popup(mContext,item.mstrCommon,(name,id)->{
+                            if(item.mID != null)
+                            {
+                                item.mID.delete(0, item.mID.length());
+                                item.mID.append(id);
+                            }
+                            item.mContent.delete(0, item.mContent.length());
+                            item.mContent.append(name);
+                            helper.setText(R.id.list_item_select_content, item.mContent.toString());
+                        },"");
+                    }
+                });
+            }
+            break;
             case MultiTypeItem.AUTOCOMPLETE:
             {
                 helper.setVisible(R.id.list_item_auto_complete_mark, item.mIsNecessary);

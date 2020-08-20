@@ -8,8 +8,6 @@ import android.view.ViewGroup;
 import android.view.Window;
 import android.view.WindowManager;
 
-import android.widget.FrameLayout;
-
 
 import androidx.appcompat.app.AlertDialog;
 
@@ -21,7 +19,6 @@ import com.chad.library.adapter.base.viewholder.BaseViewHolder;
 
 import org.jetbrains.annotations.NotNull;
 
-import java.net.PasswordAuthentication;
 import java.util.Map;
 
 public class PopupSelectDlg {

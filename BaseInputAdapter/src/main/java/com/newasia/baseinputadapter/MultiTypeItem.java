@@ -18,6 +18,7 @@ public class MultiTypeItem implements MultiItemEntity
     public static final int AUTOCOMPLETE = 10;
     public static final int MULTI_SELECT = 11;
     public static final int TWOBUTTON = 12;
+    public static final int TREE_SELECT = 13;
 
     public int mType = -1;
     public String mLabel = "";
@@ -32,6 +33,16 @@ public class MultiTypeItem implements MultiItemEntity
     public View.OnClickListener mClickedListener2;
     public String mLabel2 = "";
 
+
+    public MultiTypeItem(int type, String label, StringBuffer strContent)
+    {
+        this(type,label,strContent,false);
+    }
+
+    public MultiTypeItem(int type, String label, StringBuffer strContent,boolean isNecessary)
+    {
+        this(type,label,strContent,null,"",-1,isNecessary);
+    }
 
 
     public MultiTypeItem(int type, String label, StringBuffer strContent, StringBuffer strID, String strCommon, int nCommon)
