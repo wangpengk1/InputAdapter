@@ -42,9 +42,9 @@ public class CommonMultiTypeAdapter extends BaseMultiItemQuickAdapter<MultiTypeI
         void OnEnum(String sql,OnAutoCompleteResult resutListener);
     }
 
-    private OnEnumAutoComplete mAutoCompleteEnumListener;
+    private static OnEnumAutoComplete mAutoCompleteEnumListener;
 
-    public void setEnumAutoCompleteMethod(OnEnumAutoComplete method)
+    public static void setEnumAutoCompleteMethod(OnEnumAutoComplete method)
     {
         mAutoCompleteEnumListener = method;
     }
