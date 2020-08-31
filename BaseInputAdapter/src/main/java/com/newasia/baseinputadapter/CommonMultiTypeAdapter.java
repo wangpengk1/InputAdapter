@@ -2,6 +2,8 @@ package com.newasia.baseinputadapter;
 
 
 import android.app.Activity;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.graphics.Color;
 import android.text.Editable;
 import android.text.TextWatcher;
@@ -10,6 +12,7 @@ import android.widget.ArrayAdapter;
 import android.widget.AutoCompleteTextView;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
@@ -22,6 +25,7 @@ import com.bigkoo.pickerview.view.TimePickerView;
 import com.chad.library.adapter.base.BaseMultiItemQuickAdapter;
 import com.chad.library.adapter.base.viewholder.BaseViewHolder;
 
+import java.io.File;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
@@ -42,12 +46,48 @@ public class CommonMultiTypeAdapter extends BaseMultiItemQuickAdapter<MultiTypeI
         void OnEnum(String sql,OnAutoCompleteResult resutListener);
     }
 
+    public static interface OnDownImageResult
+    {
+        void onResult(boolean bok, Bitmap bitmap);
+    }
+
+    public static interface OnDownImageListener
+    {
+        void onDownImage(String name,OnDownImageResult result);
+    }
+
+
+    public static interface OnUploadImageResult
+    {
+        void onUploadResult(boolean bok,String name);
+    }
+
+    public static interface OnUploadImageListener
+    {
+        void onUploadImage(File imgFile, OnUploadImageResult listener);
+    }
+
     private static OnEnumAutoComplete mAutoCompleteEnumListener;
+    private static OnDownImageListener mDownImageListener;
+    private static OnUploadImageListener mUploadImageListener;
 
     public static void setEnumAutoCompleteMethod(OnEnumAutoComplete method)
     {
         mAutoCompleteEnumListener = method;
     }
+
+    public static void setDownImageListener(OnDownImageListener listener)
+    {
+        mDownImageListener = listener;
+    }
+
+    public static void setUploadImageListener(OnUploadImageListener listener)
+    {
+        mUploadImageListener = listener;
+    }
+
+
+
 
     public CommonMultiTypeAdapter(Activity context)
     {
@@ -414,26 +454,19 @@ public class CommonMultiTypeAdapter extends BaseMultiItemQuickAdapter<MultiTypeI
             break;
             case MultiTypeItem.IMAGE:
             {
-//                helper.setText(R.id.list_image_title,item.mLabel);
-//                final ImageView img0 = helper.getView(R.id.list_image_img0);
-//                item.mContenView = img0;
-//                if(item.mContent !=null && !item.mContent.toString().isEmpty())
-//                {
-//                    JSonTransmitImage.GetImageFromServer(mContext,item.mContent.toString(), new JSonTransmitImage.onDownImageResult() {
-//                        @Override
-//                        public void downResult(boolean isOk, Bitmap bitmap) {
-//                            if (isOk)
-//                            {
-//                                img0.setImageBitmap(bitmap);
-//                                ImagePreviewActivity.setBitmap(bitmap);
-//                            }
-//                        }
-//                    });
-//                }
-//                else
-//                {
-//                    helper.setText(R.id.list_image_title,item.mLabel+"(未上传)");
-//                }
+                helper.setText(R.id.list_image_title,item.mLabel);
+                final ImageView img0 = helper.getView(R.id.list_image_img0);
+                item.mContenView = img0;
+                if(item.mContent !=null && !item.mContent.toString().isEmpty() && mDownImageListener!=null)
+                {
+                    mDownImageListener.onDownImage(item.mContent.toString(),(bok,bitmap)->{
+                        img0.setImageBitmap(bitmap);
+                    });
+                }
+                else
+                {
+                    helper.setText(R.id.list_image_title,item.mLabel+"(未上传)");
+                }
 //                img0.setOnLongClickListener(new View.OnLongClickListener() {
 //                    @Override
 //                    public boolean onLongClick(View v)
@@ -446,39 +479,34 @@ public class CommonMultiTypeAdapter extends BaseMultiItemQuickAdapter<MultiTypeI
 //                    }
 //                });
 
-//                img0.setOnClickListener(new View.OnClickListener() {
-//                    @Override
-//                    public void onClick(View v) {
-//                        mImageHelper.popupGetImageDlg((Activity) mContext, new GetImageHelper.onTakeImageResult() {
-//                            @Override
-//                            public void getImageResult(final File imgeFile)
-//                            {
-//                                final Bitmap tmpBitmap = BitmapFactory.decodeFile(imgeFile.getAbsolutePath());
-//                                TransparentProgressDialog.showLoadingMessage(mContext, "上传图片中....", false);
-//                                JSonTransmitImage.UpdateImageFileToServer(mContext,imgeFile, new JSonTransmitImage.onUpdateImageResult() {
-//                                    @Override
-//                                    public void updateResult(boolean isOK, String name)
-//                                    {
-//                                        if (isOK)
-//                                        {
-//                                            TransparentProgressDialog.showSuccessMessage(mContext, "上传完毕");
-//                                            item.mContent.delete(0, item.mContent.length());
-//                                            item.mContent.append(name);
-//                                            img0.setImageBitmap(tmpBitmap);
-//                                            ImagePreviewActivity.setBitmap(tmpBitmap);
-//                                            helper.setText(R.id.list_image_title,item.mLabel);
-//                                        }
-//                                        else
-//                                        {
-//                                            TransparentProgressDialog.showErrorMessage(mContext,"保存失败");
-//                                        }
-//                                    }
-//                                });
-//                            }
-//                        });
-//
-//                    }
-//                });
+                img0.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        mImageHelper.popupGetImageDlg((Activity) mContext, new GetImageHelper.onTakeImageResult() {
+                            @Override
+                            public void getImageResult(final File imgeFile)
+                            {
+                                final Bitmap tmpBitmap = BitmapFactory.decodeFile(imgeFile.getAbsolutePath());
+                                TransparentProgressDialog.showLoadingMessage(mContext, "上传图片中....", false);
+                                if(mUploadImageListener!=null)
+                                {
+                                    mUploadImageListener.onUploadImage(imgeFile,(bok,name)->{
+                                        if(bok)
+                                        {
+                                            TransparentProgressDialog.showSuccessMessage(mContext, "上传完毕");
+                                            item.mContent.delete(0, item.mContent.length());
+                                            item.mContent.append(name);
+                                            img0.setImageBitmap(tmpBitmap);
+                                            helper.setText(R.id.list_image_title,item.mLabel);
+                                        }
+                                        else TransparentProgressDialog.showErrorMessage(mContext,"保存失败");
+                                    });
+                                }
+                            }
+                        });
+
+                    }
+                });
             }
                 break;
             case MultiTypeItem.MULTI_SELECT:
