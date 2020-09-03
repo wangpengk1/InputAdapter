@@ -4,6 +4,7 @@
     <color name="colorPrimaryDark">#00574B</color>
     <color name="colorAccent">#D81B60</color>
 
+    <color name="transparent">#0000</color><!-- 透明 -->
 
     <color name="deepskyblue">#00bfff</color><!--深天蓝色 -->
     <color name="color_999">#999999</color>
