@@ -53,7 +53,7 @@ public class CommonMultiTypeAdapter extends BaseMultiItemQuickAdapter<MultiTypeI
 
     public static interface OnDownImageListener
     {
-        void onDownImage(String name,OnDownImageResult result);
+        void onDownImage(ImageView view,String name,OnDownImageResult result);
     }
 
 
@@ -67,9 +67,15 @@ public class CommonMultiTypeAdapter extends BaseMultiItemQuickAdapter<MultiTypeI
         void onUploadImage(File imgFile, OnUploadImageResult listener);
     }
 
+    public static interface OnPreshowImageListener
+    {
+        void onPreShow(String strImg);
+    }
+
     private static OnEnumAutoComplete mAutoCompleteEnumListener;
     private static OnDownImageListener mDownImageListener;
     private static OnUploadImageListener mUploadImageListener;
+    private static OnPreshowImageListener mShowImageListener;
 
     public static void setEnumAutoCompleteMethod(OnEnumAutoComplete method)
     {
@@ -84,6 +90,11 @@ public class CommonMultiTypeAdapter extends BaseMultiItemQuickAdapter<MultiTypeI
     public static void setUploadImageListener(OnUploadImageListener listener)
     {
         mUploadImageListener = listener;
+    }
+
+    public static void setShowImageListener(OnPreshowImageListener listener)
+    {
+        mShowImageListener = listener;
     }
 
 
@@ -459,7 +470,7 @@ public class CommonMultiTypeAdapter extends BaseMultiItemQuickAdapter<MultiTypeI
                 item.mContenView = img0;
                 if(item.mContent !=null && !item.mContent.toString().isEmpty() && mDownImageListener!=null)
                 {
-                    mDownImageListener.onDownImage(item.mContent.toString(),(bok,bitmap)->{
+                    mDownImageListener.onDownImage(img0,item.mContent.toString(),(bok,bitmap)->{
                         img0.setImageBitmap(bitmap);
                     });
                 }
@@ -467,17 +478,14 @@ public class CommonMultiTypeAdapter extends BaseMultiItemQuickAdapter<MultiTypeI
                 {
                     helper.setText(R.id.list_image_title,item.mLabel+"(未上传)");
                 }
-//                img0.setOnLongClickListener(new View.OnLongClickListener() {
-//                    @Override
-//                    public boolean onLongClick(View v)
-//                    {
-//                        Intent intent = new Intent();
-//                        intent.setClass(mContext, ImagePreviewActivity.class);
-//                        intent.putExtra("image", item.mContent.toString());
-//                        mContext.startActivity(intent);
-//                        return true;
-//                    }
-//                });
+                img0.setOnLongClickListener(new View.OnLongClickListener() {
+                    @Override
+                    public boolean onLongClick(View v)
+                    {
+                        if(mShowImageListener!=null) mShowImageListener.onPreShow(item.mContent.toString());
+                        return true;
+                    }
+                });
 
                 img0.setOnClickListener(new View.OnClickListener() {
                     @Override
