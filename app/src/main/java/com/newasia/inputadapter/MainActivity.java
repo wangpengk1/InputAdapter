@@ -1,13 +1,16 @@
 package com.newasia.inputadapter;
 
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 
 import com.newasia.baseinputadapter.CommonMultiTypeAdapter;
+import com.newasia.baseinputadapter.GetImageHelper;
 import com.newasia.baseinputadapter.MultiTypeItem;
 import com.newasia.baseinputadapter.Node;
 import com.newasia.baseinputadapter.SimpleTreeRecyclerAdapter;
@@ -26,6 +29,7 @@ public class MainActivity extends AppCompatActivity {
 
     private StringBuffer test1 = new StringBuffer("11123");
     private StringBuffer test2 = new StringBuffer("asjdiwja");
+    private StringBuffer mOutImage = new StringBuffer("");
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -44,6 +48,8 @@ public class MainActivity extends AppCompatActivity {
         mAdapter.addData(new MultiTypeItem(MultiTypeItem.EDIT,"编辑框",test1,true));
         mAdapter.addData(new MultiTypeItem(MultiTypeItem.SHOW,"SHOW",test2));
         mAdapter.addData(new MultiTypeItem(MultiTypeItem.TREE_SELECT,"部门",test1,test2,"select mjxl,mjms from sysmjb where mjbh = 1313",-1,false));
+        MultiTypeItem item = new MultiTypeItem(MultiTypeItem.IMAGE, "里程照", mOutImage,null,"",-1,false);
+        mAdapter.addData(item);
         mRecyclerView.setAdapter(mAdapter);
     }
 
@@ -112,5 +118,11 @@ public class MainActivity extends AppCompatActivity {
     {
         public String name;
         public String id;
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        GetImageHelper.getInstance(true,this).onActivityResult(requestCode,resultCode,data);
     }
 }

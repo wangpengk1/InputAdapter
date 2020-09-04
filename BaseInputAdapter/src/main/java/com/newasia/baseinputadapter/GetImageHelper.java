@@ -69,7 +69,7 @@ public class GetImageHelper
     {
         mContext = context;
         mIsCrop = isCrop;
-        rootFile= new File(context.getFilesDir() + "/TakePhotoPic");
+        rootFile= new File(context.getExternalCacheDir() + "/TakePhotoPic");
         if (!rootFile.exists())
         {
             rootFile.mkdirs();
@@ -172,20 +172,21 @@ public class GetImageHelper
     }
 
 
-    private String getPathFromUri(Uri uri, Context context) {
-        if (uri == null) {
-            return null;
-        }
+//    private String getPathFromUri(Uri uri, Context context) {
+//        if (uri == null) {
+//            return null;
+//        }
+//
+//        if (uri.getAuthority().compareToIgnoreCase("com.newasia.MyCar")==0)
+//        {
+//            return Environment.getExternalStorageDirectory()+uri.getPath().replace("/external_path", "");
+//        }
+//        else
+//        {
+//            return getRealFilePath(context,uri);
+//        }
+//    }
 
-        if (uri.getAuthority().compareToIgnoreCase("com.newasia.MyCar")==0)
-        {
-            return Environment.getExternalStorageDirectory()+uri.getPath().replace("/external_path", "");
-        }
-        else
-        {
-            return getRealFilePath(context,uri);
-        }
-    }
 
 
     /**
@@ -195,7 +196,7 @@ public class GetImageHelper
     {
         if (!mIsCrop)
         {
-            String strPath = getPathFromUri(uri, mContext);
+            String strPath = getRealFilePath(mContext,uri);
             if (strPath !=null)
             {
                 mOnResult.getImageResult(new File(strPath));
