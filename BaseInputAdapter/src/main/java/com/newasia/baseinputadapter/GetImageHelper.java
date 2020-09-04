@@ -69,7 +69,7 @@ public class GetImageHelper
     {
         mContext = context;
         mIsCrop = isCrop;
-        rootFile= new File(Environment.getExternalStorageDirectory().getAbsolutePath() + "/TakePhotoPic");
+        rootFile= new File(context.getFilesDir() + "/TakePhotoPic");
         if (!rootFile.exists())
         {
             rootFile.mkdirs();
