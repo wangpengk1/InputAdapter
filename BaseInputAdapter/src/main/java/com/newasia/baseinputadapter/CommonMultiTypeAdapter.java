@@ -103,7 +103,7 @@ public class CommonMultiTypeAdapter extends BaseMultiItemQuickAdapter<MultiTypeI
     public CommonMultiTypeAdapter(Activity context)
     {
         super(null);
-        mImageHelper = new GetImageHelper(true,context);
+        mImageHelper = GetImageHelper.getInstance(true,context);
         mContext = context;
         addItemType(MultiTypeItem.EDIT, R.layout.multi_type_item_edit);
         addItemType(MultiTypeItem.BUTTON,R.layout.multi_type_item_button);

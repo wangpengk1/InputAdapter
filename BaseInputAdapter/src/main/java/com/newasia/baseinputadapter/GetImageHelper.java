@@ -13,7 +13,7 @@ import android.os.Build;
 import android.os.Environment;
 import android.provider.MediaStore;
 
-import androidx.annotation.NonNull;
+
 import androidx.core.content.FileProvider;
 
 import com.xuexiang.xaop.annotation.Permission;
@@ -22,7 +22,7 @@ import com.xuexiang.xaop.consts.PermissionConsts;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
-import java.util.List;
+
 
 
 import static android.app.Activity.RESULT_OK;
@@ -44,7 +44,28 @@ public class GetImageHelper
     private boolean mIsCrop;
     private onTakeImageResult mOnResult;
 
-    GetImageHelper(boolean isCrop,Activity context)
+    public Activity getContext()
+    {
+        return mContext;
+    }
+
+    private static GetImageHelper mInstance;
+
+    public static GetImageHelper getInstance(boolean isCrop,Activity context)
+    {
+        if(mInstance!=null)
+        {
+            if(mInstance.getContext()!= context)
+            {
+                mInstance = new GetImageHelper(isCrop,context);
+            }
+        }
+        else  mInstance = new GetImageHelper(isCrop,context);
+
+        return mInstance;
+    }
+
+    private GetImageHelper(boolean isCrop,Activity context)
     {
         mContext = context;
         mIsCrop = isCrop;
