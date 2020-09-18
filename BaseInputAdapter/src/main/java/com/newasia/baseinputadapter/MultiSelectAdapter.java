@@ -20,12 +20,12 @@ public class MultiSelectAdapter extends BaseQuickAdapter<MultiSelectAdapter.Chec
         boolean isChecked = false;
     }
 
-    public static interface OnLoadResult
+    public interface OnLoadResult
     {
         void onResult(ArrayList<CheckItem> list);
     }
 
-    public static interface OnLoadItemsFromServer
+    public interface OnLoadItemsFromServer
     {
         void onLoadItems(String sql,OnLoadResult resultListener);
     }
@@ -33,7 +33,7 @@ public class MultiSelectAdapter extends BaseQuickAdapter<MultiSelectAdapter.Chec
 
     private static OnLoadItemsFromServer mLoadListener;
 
-    public void setLoadItemsListener(OnLoadItemsFromServer listener)
+    public static void setLoadItemsListener(OnLoadItemsFromServer listener)
     {
         mLoadListener = listener;
     }
