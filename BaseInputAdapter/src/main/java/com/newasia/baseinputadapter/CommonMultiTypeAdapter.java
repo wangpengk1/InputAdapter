@@ -30,11 +30,14 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import java.util.Map;
+import java.util.Set;
 
 public class CommonMultiTypeAdapter extends BaseMultiItemQuickAdapter<MultiTypeItem, BaseViewHolder>
 {
     private GetImageHelper mImageHelper;
     private Activity mContext;
+    private ConvertFilter mConvertFilter;
 
     public static interface OnAutoCompleteResult
     {
@@ -71,6 +74,12 @@ public class CommonMultiTypeAdapter extends BaseMultiItemQuickAdapter<MultiTypeI
     {
         void onPreShow(String strImg);
     }
+
+    public static interface ConvertFilter
+    {
+        void onConvert(final BaseViewHolder helper,final MultiTypeItem item);
+    }
+
 
     private static OnEnumAutoComplete mAutoCompleteEnumListener;
     private static OnDownImageListener mDownImageListener;
@@ -124,6 +133,17 @@ public class CommonMultiTypeAdapter extends BaseMultiItemQuickAdapter<MultiTypeI
 
     }
 
+    public CommonMultiTypeAdapter(Activity context, ConvertFilter filter, Map<Integer,Integer> typeMap)
+    {
+        this(context);
+        mConvertFilter  = filter;
+        Set<Map.Entry<Integer,Integer>> set = typeMap.entrySet();
+        for(Map.Entry<Integer,Integer> entry:set)
+        {
+            addItemType(entry.getKey(),entry.getValue());
+        }
+    }
+
 
     public boolean checkInputParam()
     {
@@ -167,6 +187,11 @@ public class CommonMultiTypeAdapter extends BaseMultiItemQuickAdapter<MultiTypeI
     @Override
     protected void convert(final BaseViewHolder helper,final MultiTypeItem item)
     {
+        if(mConvertFilter!=null)
+        {
+            mConvertFilter.onConvert(helper,item);
+        }
+
         switch (helper.getItemViewType())
         {
             case MultiTypeItem.EDIT:

@@ -1,0 +1,15 @@
+<component name="libraryTable">
+  <library name="Gradle: com.github.wangpengk1.XAOP:xaop-runtime:1.0.0@aar">
+    <CLASSES>
+      <root url="file://$USER_HOME$/.gradle/caches/transforms-2/files-2.1/a3b6ca15cb95750daa5868bc04fc120f/jetified-xaop-runtime-1.0.0/AndroidManifest.xml" />
+      <root url="jar://$USER_HOME$/.gradle/caches/transforms-2/files-2.1/a3b6ca15cb95750daa5868bc04fc120f/jetified-xaop-runtime-1.0.0/jars/classes.jar!/" />
+      <root url="file://$USER_HOME$/.gradle/caches/transforms-2/files-2.1/a3b6ca15cb95750daa5868bc04fc120f/jetified-xaop-runtime-1.0.0/res" />
+    </CLASSES>
+    <JAVADOC>
+      <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/com.github.wangpengk1.XAOP/xaop-runtime/1.0.0/3fe0d7f65af79b7ce17cb301e7572d8ea52916a/xaop-runtime-1.0.0-javadoc.jar!/" />
+    </JAVADOC>
+    <SOURCES>
+      <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/com.github.wangpengk1.XAOP/xaop-runtime/1.0.0/4528d47975e6551655bb1a6de04cd3b1c34aa1c7/xaop-runtime-1.0.0-sources.jar!/" />
+    </SOURCES>
+  </library>
+</component>

@@ -20,6 +20,7 @@ public class MultiTypeItem implements MultiItemEntity
     public static final int TWOBUTTON = 12;
     public static final int TREE_SELECT = 13;
 
+
     public int mType = -1;
     public String mLabel = "";
     public StringBuffer mContent;
@@ -33,6 +34,11 @@ public class MultiTypeItem implements MultiItemEntity
     public View.OnClickListener mClickedListener2;
     public String mLabel2 = "";
 
+
+    public MultiTypeItem(int type)
+    {
+        mType = type;
+    }
 
     public MultiTypeItem(int type, String label, StringBuffer strContent)
     {
