@@ -8,11 +8,13 @@ import android.graphics.Color;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.AutoCompleteTextView;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
@@ -130,6 +132,8 @@ public class CommonMultiTypeAdapter extends BaseMultiItemQuickAdapter<MultiTypeI
         addItemType(MultiTypeItem.TWOBUTTON, R.layout.multi_type_item_two_button);
 
         addItemType(MultiTypeItem.TREE_SELECT,R.layout.multi_type_item_select);
+
+        addItemType(MultiTypeItem.DIVIDING,R.layout.multi_type_item_dividing);
 
     }
 
@@ -560,6 +564,15 @@ public class CommonMultiTypeAdapter extends BaseMultiItemQuickAdapter<MultiTypeI
                 adapter.enumData();
             }
             break;
+            case MultiTypeItem.DIVIDING:
+            {
+                LinearLayout layout = helper.getView(R.id.root_layout);
+                ViewGroup.LayoutParams layoutParams = layout.getLayoutParams();
+                layoutParams.height = item.mHeight;
+                layout.setLayoutParams(layoutParams);
+                layout.setBackgroundColor(item.mColor);
+            }
+                break;
                 default:
                     break;
         }

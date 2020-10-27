@@ -1,8 +1,11 @@
 package com.newasia.baseinputadapter;
 
+import android.graphics.Color;
 import android.view.View;
 
 import com.chad.library.adapter.base.entity.MultiItemEntity;
+
+import java.net.PortUnreachableException;
 
 public class MultiTypeItem implements MultiItemEntity
 {
@@ -19,6 +22,7 @@ public class MultiTypeItem implements MultiItemEntity
     public static final int MULTI_SELECT = 11;
     public static final int TWOBUTTON = 12;
     public static final int TREE_SELECT = 13;
+    public static final int DIVIDING = 14;
 
 
     public int mType = -1;
@@ -34,10 +38,20 @@ public class MultiTypeItem implements MultiItemEntity
     public View.OnClickListener mClickedListener2;
     public String mLabel2 = "";
 
+    public int mHeight = 0;
+    public int mColor = Color.WHITE;
+
 
     public MultiTypeItem(int type)
     {
         mType = type;
+    }
+
+    public MultiTypeItem(int type,int height,int color)
+    {
+        mType = type;
+        mHeight = height;
+        mColor = color;
     }
 
     public MultiTypeItem(int type, String label, StringBuffer strContent)
