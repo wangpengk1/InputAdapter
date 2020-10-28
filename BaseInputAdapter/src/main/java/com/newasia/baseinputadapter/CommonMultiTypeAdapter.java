@@ -16,6 +16,7 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
+import android.widget.Switch;
 import android.widget.TextView;
 
 import androidx.recyclerview.widget.GridLayoutManager;
@@ -564,6 +565,15 @@ public class CommonMultiTypeAdapter extends BaseMultiItemQuickAdapter<MultiTypeI
                 adapter.enumData();
             }
             break;
+            case MultiTypeItem.SWITCH:
+            {
+                helper.setText(R.id.list_item_switch_label,item.mLabel);
+                Switch sw = helper.getView(R.id.list_item_switch);
+                item.mContenView = sw;
+                if(item.mCheckChangeListener!=null)
+                sw.setOnCheckedChangeListener(item.mCheckChangeListener);
+            }
+                break;
             case MultiTypeItem.DIVIDING:
             {
                 LinearLayout layout = helper.getView(R.id.root_layout);

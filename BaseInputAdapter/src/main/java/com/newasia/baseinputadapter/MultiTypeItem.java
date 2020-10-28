@@ -2,6 +2,7 @@ package com.newasia.baseinputadapter;
 
 import android.graphics.Color;
 import android.view.View;
+import android.widget.Switch;
 
 import com.chad.library.adapter.base.entity.MultiItemEntity;
 
@@ -40,6 +41,8 @@ public class MultiTypeItem implements MultiItemEntity
 
     public int mHeight = 0;
     public int mColor = Color.WHITE;
+
+    public Switch.OnCheckedChangeListener mCheckChangeListener;
 
 
     public MultiTypeItem(int type)
@@ -98,6 +101,13 @@ public class MultiTypeItem implements MultiItemEntity
         mClickedListener2 = listener2;
     }
 
+
+    public MultiTypeItem(int type, String label, Switch.OnCheckedChangeListener listener)
+    {
+        mType = type;
+        mLabel = label;
+        mCheckChangeListener = listener;
+    }
 
 
     @Override

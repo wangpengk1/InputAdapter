@@ -7,6 +7,14 @@
     android:paddingLeft="15sp"
     android:paddingRight="15sp"
     android:gravity="center_vertical">
+
+    <TextView
+        android:id="@+id/list_item_switch_label"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textSize="15dp"
+        android:layout_alignParentLeft="true"/>
+
     <Switch
         android:id="@+id/list_item_switch"
         android:layout_width="wrap_content"
