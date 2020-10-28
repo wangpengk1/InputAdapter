@@ -6,7 +6,8 @@
     android:orientation="horizontal"
     android:paddingLeft="15sp"
     android:paddingRight="15sp"
-    android:gravity="center_vertical">
+    android:gravity="center_vertical"
+    android:background="@drawable/ripple_bg">
 
     <TextView
         android:id="@+id/list_item_switch_label"
