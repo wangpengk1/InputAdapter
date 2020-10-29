@@ -42,6 +42,7 @@ public class MultiTypeItem implements MultiItemEntity
     public int mHeight = 0;
     public int mColor = Color.WHITE;
 
+
     public Switch.OnCheckedChangeListener mCheckChangeListener;
 
 
@@ -102,11 +103,12 @@ public class MultiTypeItem implements MultiItemEntity
     }
 
 
-    public MultiTypeItem(int type, String label, Switch.OnCheckedChangeListener listener)
+    public MultiTypeItem(int type, String label,boolean bCheck,Switch.OnCheckedChangeListener listener)
     {
         mType = type;
         mLabel = label;
         mCheckChangeListener = listener;
+        if(bCheck) mNumCommon = 1;
     }
 
 

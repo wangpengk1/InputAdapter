@@ -572,6 +572,11 @@ public class CommonMultiTypeAdapter extends BaseMultiItemQuickAdapter<MultiTypeI
                 item.mContenView = sw;
                 if(item.mCheckChangeListener!=null)
                 sw.setOnCheckedChangeListener(item.mCheckChangeListener);
+                if(item.mNumCommon!=-1)
+                {
+                    sw.setChecked(true);
+                    item.mNumCommon = -1;
+                }
             }
                 break;
             case MultiTypeItem.DIVIDING:
