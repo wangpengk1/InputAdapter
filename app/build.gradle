@@ -44,7 +44,7 @@ dependencies {
 
     implementation  'com.github.CymChad:BaseRecyclerViewAdapterHelper:3.0.4'
 
-    implementation 'com.github.wangpengk1.XAOP:xaop-runtime:1.0.0'
+    implementation 'com.github.xuexiangjys.XAOP:xaop-runtime:1.1.0'
 
     implementation project(':BaseInputAdapter')
 

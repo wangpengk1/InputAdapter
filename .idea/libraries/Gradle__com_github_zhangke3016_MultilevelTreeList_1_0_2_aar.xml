@@ -1,9 +1,9 @@
 <component name="libraryTable">
   <library name="Gradle: com.github.zhangke3016:MultilevelTreeList:1.0.2@aar">
     <CLASSES>
-      <root url="file://$USER_HOME$/.gradle/caches/transforms-2/files-2.1/cf0e71e1268cb1bb5b7bb26f00aac36a/jetified-MultilevelTreeList-1.0.2/AndroidManifest.xml" />
-      <root url="jar://$USER_HOME$/.gradle/caches/transforms-2/files-2.1/cf0e71e1268cb1bb5b7bb26f00aac36a/jetified-MultilevelTreeList-1.0.2/jars/classes.jar!/" />
-      <root url="file://$USER_HOME$/.gradle/caches/transforms-2/files-2.1/cf0e71e1268cb1bb5b7bb26f00aac36a/jetified-MultilevelTreeList-1.0.2/res" />
+      <root url="file://$USER_HOME$/.gradle/caches/transforms-2/files-2.1/1e0f7b7d25932c455c180b03a46b1add/jetified-MultilevelTreeList-1.0.2/AndroidManifest.xml" />
+      <root url="jar://$USER_HOME$/.gradle/caches/transforms-2/files-2.1/1e0f7b7d25932c455c180b03a46b1add/jetified-MultilevelTreeList-1.0.2/jars/classes.jar!/" />
+      <root url="file://$USER_HOME$/.gradle/caches/transforms-2/files-2.1/1e0f7b7d25932c455c180b03a46b1add/jetified-MultilevelTreeList-1.0.2/res" />
     </CLASSES>
     <JAVADOC />
     <SOURCES>

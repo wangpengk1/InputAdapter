@@ -47,13 +47,13 @@ public class MainActivity extends AppCompatActivity {
         //getDatasFromServer("select mjxl,mjms from sysmjb where mjbh = 1313");
 
 
-        Map<Integer,Integer> typeMap = new Hashtable<>();
-        typeMap.put(14,R.layout.custom_item_layout);
-        mAdapter = new CommonMultiTypeAdapter(this,mFilter,typeMap);
+//        Map<Integer,Integer> typeMap = new Hashtable<>();
+//        typeMap.put(14,R.layout.custom_item_layout);
+        mAdapter = new CommonMultiTypeAdapter(this);
 
         mAdapter.addData(new MultiTypeItem(MultiTypeItem.EDIT,"编辑框",test1,true));
         mAdapter.addData(new MultiTypeItem(MultiTypeItem.SHOW,"SHOW",test2));
-        mAdapter.addData(new MultiTypeItem(14));
+        mAdapter.addData(new MultiTypeItem(MultiTypeItem.DIVIDING));
         mAdapter.addData(new MultiTypeItem(MultiTypeItem.TREE_SELECT,"部门",test1,test2,"select mjxl,mjms from sysmjb where mjbh = 1313",-1,false));
         MultiTypeItem item = new MultiTypeItem(MultiTypeItem.IMAGE, "里程照", mOutImage,null,"",-1,false);
         mAdapter.addData(item);

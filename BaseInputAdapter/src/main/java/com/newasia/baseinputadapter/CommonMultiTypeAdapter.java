@@ -581,11 +581,11 @@ public class CommonMultiTypeAdapter extends BaseMultiItemQuickAdapter<MultiTypeI
                 break;
             case MultiTypeItem.DIVIDING:
             {
-                LinearLayout layout = helper.getView(R.id.root_layout);
-                ViewGroup.LayoutParams layoutParams = layout.getLayoutParams();
-                layoutParams.height = item.mHeight;
-                layout.setLayoutParams(layoutParams);
-                layout.setBackgroundColor(item.mColor);
+//                LinearLayout layout = helper.getView(R.id.root_layout);
+//                ViewGroup.LayoutParams layoutParams = layout.getLayoutParams();
+//                layoutParams.height = item.mHeight;
+//                layout.setLayoutParams(layoutParams);
+//                layout.setBackgroundColor(item.mColor);
             }
                 break;
                 default:
