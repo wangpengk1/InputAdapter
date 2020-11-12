@@ -16,8 +16,7 @@ import android.provider.MediaStore;
 
 import androidx.core.content.FileProvider;
 
-import com.xuexiang.xaop.annotation.Permission;
-import com.xuexiang.xaop.consts.PermissionConsts;
+
 
 import java.io.File;
 import java.io.FileOutputStream;
@@ -118,7 +117,6 @@ public class GetImageHelper
 
 
 
-    @Permission(value = {PermissionConsts.CAMERA,PermissionConsts.STORAGE})
     private void takePhoto() {
         //用于保存调用相机拍照后所生成的文件
         if (!Environment.getExternalStorageState().equals(Environment.MEDIA_MOUNTED)) {
@@ -140,7 +138,6 @@ public class GetImageHelper
     }
 
 
-    @Permission(value = {PermissionConsts.STORAGE})
     private void choosePhoto() {
         Intent photoPickerIntent = new Intent(Intent.ACTION_PICK);
         photoPickerIntent.setType("image/*");

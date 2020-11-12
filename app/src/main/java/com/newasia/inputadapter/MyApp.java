@@ -7,7 +7,6 @@ import com.newasia.baseinputadapter.CommonMultiTypeAdapter;
 import com.newasia.baseinputadapter.Node;
 import com.newasia.baseinputadapter.PopupSelectDlg;
 import com.newasia.baseinputadapter.PopupTreeSelectDlg;
-import com.xuexiang.xaop.XAOP;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -23,7 +22,6 @@ public class MyApp extends Application {
     @Override
     public void onCreate() {
         super.onCreate();
-        XAOP.init(this);
         CommonMultiTypeAdapter.setUploadImageListener((imgFile, listener) -> {
             byte[] data = loadImage(imgFile);
             Log.e("test",data.length+"");

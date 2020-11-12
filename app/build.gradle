@@ -1,5 +1,4 @@
 apply plugin: 'com.android.application'
-apply plugin: 'com.xuexiang.xaop'
 android {
     compileSdkVersion 29
     buildToolsVersion "30.0.0"
@@ -44,7 +43,6 @@ dependencies {
 
     implementation  'com.github.CymChad:BaseRecyclerViewAdapterHelper:3.0.4'
 
-    implementation 'com.github.xuexiangjys.XAOP:xaop-runtime:1.1.0'
 
     implementation project(':BaseInputAdapter')
 

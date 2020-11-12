@@ -141,4 +141,7 @@ public class MainActivity extends AppCompatActivity {
         super.onActivityResult(requestCode, resultCode, data);
         GetImageHelper.getInstance(true,this).onActivityResult(requestCode,resultCode,data);
     }
+
+
+
 }

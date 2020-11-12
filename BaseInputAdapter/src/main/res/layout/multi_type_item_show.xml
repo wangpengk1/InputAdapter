@@ -18,6 +18,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textSize="15dp"
+            android:text="1212312"
             android:layout_alignParentLeft="true"/>
         <TextView
             android:id="@+id/list_item_show_mark"
@@ -33,17 +34,12 @@
             android:id="@+id/list_item_show_content"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:textSize="15dp"
+            android:textSize="10sp"
+            android:layout_marginLeft="15dp"
             android:text="请选择"
-            android:layout_toLeftOf="@id/list_item_show_forward"
-            android:layout_marginRight="20sp"
+            android:layout_toRightOf="@id/list_item_show_mark"
+            android:layout_alignBaseline="@id/list_item_show_label"
             android:textColor="#a0a0a0"/>
-        <ImageView
-            android:id="@+id/list_item_show_forward"
-            android:layout_width="20sp"
-            android:layout_height="20sp"
-            android:src="@drawable/forward"
-            android:layout_alignParentRight="true"/>
 
     </RelativeLayout>
 
