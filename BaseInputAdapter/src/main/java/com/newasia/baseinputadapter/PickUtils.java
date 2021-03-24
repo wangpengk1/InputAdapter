@@ -368,7 +368,7 @@ public class PickUtils {
 
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {// sdk >= 24  android7.0以上
             Uri contentUri = FileProvider.getUriForFile(context,
-                    context.getApplicationContext().getPackageName() + ".fileProvider",//与清单文件中android:authorities的值保持一致
+                    context.getApplicationContext().getPackageName() + ".fileprovider",//与清单文件中android:authorities的值保持一致
                     mediaFile);//FileProvider方式或者ContentProvider。也可使用VmPolicy方式
             Log.e("test",contentUri.toString());
             return contentUri;
